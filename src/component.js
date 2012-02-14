@@ -202,3 +202,5 @@ _V_.Component = _V_.Class.extend({
   proxy: function(fn){  return _V_.proxy(this, fn); }
 
 });
+
+_V_.Plugin = _V_.Component.extend({});

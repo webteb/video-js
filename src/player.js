@@ -83,6 +83,10 @@ _V_.Player = _V_.Component.extend({
       });
     }
 
+    _V_.eachProp(options.plugins, function(name, options){
+      _V_[name].init(this, options);
+    });
+
     // If there are no sources when the player is initialized,
     // load the first supported playback technology.
     if (!options.sources || options.sources.length == 0) {
