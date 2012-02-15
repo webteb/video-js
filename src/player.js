@@ -83,8 +83,9 @@ _V_.Player = _V_.Component.extend({
       });
     }
 
-    _V_.eachProp(options.plugins, function(name, options){
-      _V_[name].init(this, options);
+    this.eachProp(options.plugins, function(name, options){
+      this.plugins = this.plugins || {};
+      this.plugins[name] = new _V_[name](this, options);
     });
 
     // If there are no sources when the player is initialized,
