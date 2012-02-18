@@ -404,7 +404,7 @@ _V_.Player = _V_.Component.extend({
 
           // When a method isn't available on the object it throws a TypeError
           if (e.name == "TypeError") {
-            _V_.log("Video.js: " + method + " unavailable on "+this.techName+" playback technology element.", e);
+            // _V_.log("Video.js: " + method + " unavailable on "+this.techName+" playback technology element.", e);
             this.tech.isReady = false;
 
           } else {

@@ -758,7 +758,7 @@ _V_.MuteToggle = _V_.Button.extend({
 
 /* Poster Image
 ================================================================================ */
-_V_.Poster = _V_.Button.extend({
+_V_.PosterImage = _V_.Button.extend({
   init: function(player, options){
     this._super(player, options);
 
