@@ -16,9 +16,12 @@
 
   <script src="src/component.js"></script>
   <script src="src/player.js"></script>
+
   <script src="src/tech.js"></script>
   <script src="src/tech/html5.js"></script>
   <script src="src/tech/flash.js"></script>
+  <script src="src/tech/youtube.js"></script>
+
   <script src="src/controls.js"></script>
   <script src="src/events.js"></script>
   <script src="src/tracks.js"></script>
