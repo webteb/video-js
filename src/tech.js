@@ -309,10 +309,17 @@ _V_.flash = _V_.PlaybackTech.extend({
         }, options.attributes)
     ;
 
+    this.ready(function(){
+      this.el.vjs_setProperty("RTMPConnection", "rtmp://fms.andylemay.com:1935/cfx/st");
+      this.el.vjs_setProperty("RTMPStream", "mp4:debacle/debacle_500kbps.m4v");
+    });
+
     // If source was supplied pass as a flash var.
-    if (source) {
-      flashVars.src = encodeURIComponent(_V_.getAbsoluteURL(source.src));
-    }
+    // if (source) {
+    //   flashVars.src = encodeURIComponent(_V_.getAbsoluteURL(source.src));
+    // } else if (options.rtmpConnection) {
+    //   
+    // }
 
     // Add placeholder to player div
     _V_.insertFirst(placeHolder, parentEl);
