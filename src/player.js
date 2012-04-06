@@ -585,6 +585,8 @@ _V_.Player = _V_.Component.extend({
       // To fix that we'll remove the tech, and reload it after the resize has finished.
       if (this.tech.support.fullscreenResize === false && this.options.flash.iFrameMode != true) {
 
+        _V_.log("reload")
+
         this.pause();
         this.unloadTech();
 

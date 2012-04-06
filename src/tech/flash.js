@@ -62,8 +62,12 @@ _V_.flash = _V_.PlaybackTech.extend({
     if (options.startTime) {
       this.ready(function(){
         this.load();
-        this.play();
-        this.currentTime(options.startTime);
+        _V_.log("ready")
+        setTimeout(this.proxy(function(){
+          _V_.log("starttime")
+          this.currentTime(options.startTime);
+          this.play();
+        }), 5000);
       });
     }
 
@@ -253,7 +257,7 @@ _V_.flash = _V_.PlaybackTech.extend({
       },
 
       createGetter = function(attr){
-        api[attr] = function(){ return this.el.vjs_getProperty(attr); };
+        api[attr] = function(){ _V_.log(arguments.callee.caller); return this.el.vjs_getProperty(attr); };
       }
   ;
 
@@ -380,15 +384,15 @@ _V_.flash.embed = function(swf, placeHolder, flashVars, params, attributes){
       // Get element by embedding code and retrieving created element
       obj = _V_.createElement("div", { innerHTML: code }).childNodes[0],
 
-      par = placeHolder.parentNode
-  ;
+      par = placeHolder.parentNode;
 
   placeHolder.parentNode.replaceChild(obj, placeHolder);
 
   // IE6 seems to have an issue where it won't initialize the swf object after injecting it.
-  // This is a dumb temporary fix
+  // This is a dumb fix
   if (_V_.isIE()) {
     var newObj = par.childNodes[0];
+    // Set display 1 second later
     setTimeout(function(){
       newObj.style.display = "block";
     }, 1000);

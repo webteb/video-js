@@ -1,6 +1,5 @@
-/* VideoJS-Youtube API Based off youtube.js
+/* YouTube Playback Tech
 ================================================================================ */
-
 _V_.youtube = _V_.PlaybackTech.extend({
 
   init: function(player, options){
@@ -8,36 +7,36 @@ _V_.youtube = _V_.PlaybackTech.extend({
 
     var source = options.source,
 
-      // Which element to embed in
-      parentEl = options.parentEl,
+        // Which element to embed in
+        parentEl = options.parentEl,
 
-      // Create a temporary element to be replaced by swf object
-      placeHolder = this.el = _V_.createElement("div", { id: parentEl.id + "_temp_ytswf" }),
+        // Create a temporary element to be replaced by swf object
+        placeHolder = this.el = _V_.createElement("div", { id: parentEl.id + "_temp_ytswf" }),
 
-      // Generate ID for swf object
-      objId = player.el.id+"_youtube_api";
+        // Generate ID for swf object
+        objId = player.el.id+"_youtube_api";
 
-      // Store player options in local var for optimization
-      playerOptions = player.options,
+        // Store player options in local var for optimization
+        playerOptions = player.options,
 
-      // Merge default flashvars with ones passed in to init
-      flashvars = _V_.merge({
-        // Player Settings
-      }, options.flashVars),
+        // Merge default flashvars with ones passed in to init
+        flashvars = _V_.merge({
+          // Player Settings
+        }, options.flashVars),
 
-      // Merge default parames with ones passed in
-      params = _V_.merge({
-        allowScriptAccess: "always",
-        wmode: "opaque",
-        bgcolor: "#000000"
-      }, options.params),
+        // Merge default params with ones passed in
+        params = _V_.merge({
+          allowScriptAccess: "always",
+          wmode: "opaque",
+          bgcolor: "#000000"
+        }, options.params),
 
-      // Merge default attributes with ones passed in
-      attributes = _V_.merge({
-        id: objId,
-        name: objId,
-        'class': 'vjs-tech'
-      }, options.attributes);
+        // Merge default attributes with ones passed in
+        attributes = _V_.merge({
+          id: objId,
+          name: objId,
+          'class': 'vjs-tech'
+        }, options.attributes);
 
 
     this.ready(function(){
@@ -118,7 +117,9 @@ _V_.youtube = _V_.PlaybackTech.extend({
   src: function(src){
     this.el.cueVideoById(src);
   },
+
   load: function(){
+    
   }
 
 });
@@ -163,18 +164,14 @@ _V_.youtube.error = function(id, errorCode){
 /* Youtube Support Testing -------------------------------------------------------- */
 
 _V_.youtube.isSupported = function(){
-return true;
-// return swfobject.hasFlashPlayerVersion("10");
+  // YouTube requires Flash version 9 for its chromeless embed
+  // iOS devices translate the YouTube Flash embed and will still play
+  // Can't yet support iFrame
+  return !!(_V_.flash.version()[0] >= 9 || _V_.isIOS());
 }
 
 _V_.youtube.canPlaySource = function(srcObj){
   return !!(srcObj.type.toLowerCase() == "video/youtube");
-  // 
-  // if (srcObj.type.toLowerCase() == "video/youtube") {
-  //   return true;
-  // }
-  // if (srcObj.type in _V_.flash.prototype.support.formats) { return "maybe"; }
-  // return srcObj.type == "video/youtube";
 };
 
 _V_.youtube.prototype.support = {
