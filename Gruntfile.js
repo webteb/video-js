@@ -171,4 +171,68 @@ module.exports = function(grunt) {
     //   }
     // },
   });
+
+  grunt.registerTask('feature', 'Creating distribution', function(action, option){
+    // var sys = require('sys');
+    var cmd;
+    var exec = require('child_process').exec;
+    var done = this.async();
+
+    if (action === 'start') {
+      if (!option) {
+        grunt.log.error('No name supplied');
+        return done(false);
+      } else {
+        logStep('Updating the master branch');
+
+        run('git checkout master && git pull', function(stdout){
+          logStep('Creating the feature/plugins branch based on master');
+
+          run('git checkout -b feature/'+option+' master', function(){
+            logStep('Pushing the feature/plugins branch to origin');
+
+            run('git push origin feature/' + option, function(){
+              logStep('Tracking the feature/plugins branch against origin/feature/plugins')
+
+              run('git branch --set-upstream feature/'+option+' origin/feature/' + option, function(){
+                done(true);
+              });
+            });
+
+          });
+        });
+      }
+    }
+
+    function run(command, callback) {
+      log('$ ', command);
+
+      exec(command, function(err, stdout, stderr){
+        if (err) {
+          grunt.log.error(err);
+          return done(false);
+        }
+
+        grunt.log.write(stdout);
+        callback(stdout);
+      });
+    }
+
+    function log(str) { grunt.log.writeln('$ '+ cmd); }
+    function logStep(str) { log('-----> ' + str); }
+
+    // grunt.util.spawn({
+    //   cmd: 'git',
+    //   args: ['checkout', 'master']
+    // }, function(err, results){
+    //   if (err) {
+    //     grunt.log.error(err);
+    //     return done(false);
+    //   }
+
+    //   grunt.log.write(results.toString());
+
+    //   done(results);
+    // });
+  });
 };
