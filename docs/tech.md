@@ -46,7 +46,7 @@ When adding additional Tech to a video player, make sure to add the supported te
 
 ### Object Method: ###
     _V_("videoID", {
-      techOrder: {"html5", "flash", [other supported tech]}
+      techOrder: ["html5", "flash", [other supported tech]]
     });
 
 Youtube Technology
